@@ -1,0 +1,159 @@
+
+
+    <!-- Breadcrumb / regreso -->
+    <nav class="tw:text-sm tw:text-gray-400" aria-label="breadcrumb">
+      <a href="#" class="tw:inline-flex tw:items-center tw:gap-2 hover:tw:text-white">
+        <svg class="tw:w-4 tw:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+        Volver al listado
+      </a>
+    </nav>
+
+    <!-- Contenedor principal: imagen + datos -->
+    <section class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-3 tw:gap-8 tw:items-start">
+      <!-- Poster -->
+      <div class="tw:relative tw:rounded-2xl tw:overflow-hidden tw:shadow-2xl">
+        <img [src]="baseUrlImage+movie().backdrop_path" alt="Poster de Nombre de Película" class="tw:w-full tw:h-auto tw:block" />
+        <!-- badge y botones flotantes -->
+        <div class="tw:absolute tw:top-4 tw:left-4">
+          <span class="tw:bg-emerald-500 tw:text-black tw:font-semibold tw:text-xs tw:py-1 tw:px-3 tw:rounded-full">HD · Nuevo</span>
+        </div>
+
+      </div>
+
+      <!-- Info principal -->
+      <div class="lg:tw:col-span-2 tw:space-y-4">
+        <header class="tw:flex tw:flex-col sm:tw:flex-row tw:items-start sm:tw:items-center tw:justify-between tw:gap-4">
+          <div>
+            <h1 class="tw:text-3xl md:tw:text-4xl tw:font-extrabold tw:tracking-tight">{{movie().title}}<span class="tw:text-gray-400 tw:text-base tw:font-medium"> (2024)</span></h1>
+            <p class="tw:mt-2 tw:text-sm tw:text-gray-400">Dirección: <span class="tw:text-gray-200">Nombre del Director</span> · Duración: <span class="tw:text-gray-200">2h 13m</span></p>
+          </div>
+
+          <div class="tw:flex tw:items-center tw:gap-4">
+            <!-- Rating -->
+            <div class="tw:flex tw:items-center tw:gap-2 tw:bg-gray-800/60 tw:px-3 tw:py-2 tw:rounded-xl">
+              <svg class="tw:w-5 tw:h-5 tw:text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.966a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.46a1 1 0 00-.364 1.118l1.287 3.966c.3.92-.755 1.688-1.54 1.118l-3.388-2.46a1 1 0 00-1.176 0l-3.388 2.46c-.784.57-1.84-.197-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.045 9.393c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69L9.05 2.927z"/></svg>
+              <div class="tw:text-sm tw:leading-none">
+                <div class="tw:text-white tw:font-bold">8.5</div>
+                <div class="tw:text-xs tw:text-gray-400">IMDb</div>
+              </div>
+            </div>
+
+            <!-- Etiquetas y calidad -->
+            <div class="tw:text-right">
+              <div class="tw:text-sm tw:text-gray-400">Géneros</div>
+              <div class="tw:flex tw:gap-2 tw:mt-1">
+                <span class="tw:text-xs tw:border tw:border-gray-700 tw:px-2 tw:py-1 tw:rounded-full">Acción</span>
+                <span class="tw:text-xs tw:border tw:border-gray-700 tw:px-2 tw:py-1 tw:rounded-full">Thriller</span>
+                <span class="tw:text-xs tw:border tw:border-gray-700 tw:px-2 tw:py-1 tw:rounded-full">Ciencia ficción</span>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <!-- Sinopsis -->
+        <article class="tw:bg-gray-800/40 tw:p-5 tw:rounded-xl tw:shadow-inner">
+          <h2 class="tw:text-lg tw:font-semibold">Sinopsis</h2>
+          <p class="tw:mt-3 tw:text-gray-300 tw:leading-relaxed">
+            En un futuro cercano, un ex-agente debe infiltrarse en una ciudad virtual para detener una conspiración que podría borrar la memoria colectiva.
+            Entre acción implacable y giros inesperados, la película explora lo que significa recordar y olvidar.
+          </p>
+
+          <!-- Dos columnas: detalles técnicos + botón trailer -->
+          <div class="tw:mt-4 tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
+            <ul class="tw:space-y-2 tw:text-sm tw:text-gray-300">
+              <li><strong>Reparto:</strong> Actor A, Actor B, Actor C, Actor D</li>
+              <li><strong>Guion:</strong> Escritora Ejemplo</li>
+              <li><strong>País:</strong> País Ejemplo</li>
+              <li><strong>Idioma:</strong> Español · Inglés</li>
+            </ul>
+
+            <div class="tw:flex tw:flex-col tw:items-start md:tw:items-end tw:justify-between">
+              <div class="tw:flex tw:gap-3 tw:items-center">
+                <button class="tw:bg-red-600 tw:text-white tw:font-semibold tw:py-2 tw:px-4 tw:rounded-lg tw:shadow-lg hover:tw:scale-105 tw:transition" aria-label="Ver trailer">
+                  ▶ Ver tráiler
+                </button>
+                <a href="#" class="tw:inline-flex tw:items-center tw:gap-2 tw:text-sm tw:text-gray-300 hover:tw:underline">
+                  <svg class="tw:w-4 tw:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a4 4 0 004 4h10a4 4 0 004-4V7"></path></svg>
+                  Más sobre la producción
+                </a>
+              </div>
+
+              <div class="tw:mt-3 tw:text-xs tw:text-gray-400">Calificación: +13 · Subtítulos disponibles · 4K</div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Cast horizontal scroll -->
+        <section>
+          <h3 class="tw:text-lg tw:font-semibold">Reparto principal</h3>
+          <div class="tw:mt-3 tw:flex tw:overflow-x-auto tw:gap-4 tw:pb-2">
+            <!-- actor card -->
+            <div class="tw:min-w-[140px] tw:bg-gray-800 tw:rounded-xl tw:p-3 tw:text-center tw:flex-none">
+              <img src="https://via.placeholder.com/120x120.png?text=Actor+1" alt="Actor 1" class="tw:w-24 tw:h-24 tw:rounded-full tw:mx-auto" />
+              <div class="tw:mt-2 tw:text-sm tw:font-medium">Actor 1</div>
+              <div class="tw:text-xs tw:text-gray-400">Protagonista</div>
+            </div>
+            <div class="tw:min-w-[140px] tw:bg-gray-800 tw:rounded-xl tw:p-3 tw:text-center tw:flex-none">
+              <img src="https://via.placeholder.com/120x120.png?text=Actor+2" alt="Actor 2" class="tw:w-24 tw:h-24 tw:rounded-full tw:mx-auto" />
+              <div class="tw:mt-2 tw:text-sm tw:font-medium">Actor 2</div>
+              <div class="tw:text-xs tw:text-gray-400">Antagonista</div>
+            </div>
+            <div class="tw:min-w-[140px] tw:bg-gray-800 tw:rounded-xl tw:p-3 tw:text-center tw:flex-none">
+              <img src="https://via.placeholder.com/120x120.png?text=Actor+3" alt="Actor 3" class="tw:w-24 tw:h-24 tw:rounded-full tw:mx-auto" />
+              <div class="tw:mt-2 tw:text-sm tw:font-medium">Actor 3</div>
+              <div class="tw:text-xs tw:text-gray-400">Secundario</div>
+            </div>
+            <!-- agrega más según necesites -->
+          </div>
+        </section>
+
+        <!-- Sección de valoraciones y acciones del usuario -->
+        <section class="tw:flex tw:flex-col md:tw:flex-row tw:items-start md:tw:items-center tw:justify-between tw:gap-4 tw:pt-2">
+          <div class="tw:flex tw:items-center tw:gap-4">
+            <label class="tw:text-sm tw:text-gray-300">Tu valoración:</label>
+            <div class="tw:flex tw:gap-1" role="radiogroup" aria-label="Valora esta película">
+              <!-- ejemplo de estrellas interactivas (visuales) -->
+              <button class="tw:p-1" aria-label="1 estrella">☆</button>
+              <button class="tw:p-1" aria-label="2 estrellas">☆</button>
+              <button class="tw:p-1" aria-label="3 estrellas">☆</button>
+              <button class="tw:p-1" aria-label="4 estrellas">☆</button>
+              <button class="tw:p-1" aria-label="5 estrellas">☆</button>
+            </div>
+          </div>
+
+          <div class="tw:flex tw:gap-3">
+            <button class="tw:bg-blue-600 tw:text-white tw:py-2 tw:px-4 tw:rounded-lg hover:tw:opacity-90">Compartir</button>
+            <button class="tw:bg-transparent tw:border tw:border-gray-700 tw:text-gray-200 tw:py-2 tw:px-4 tw:rounded-lg">Reportar</button>
+          </div>
+        </section>
+
+        <!-- Películas similares (grid) -->
+        <section class="tw:mt-4">
+          <h3 class="tw:text-lg tw:font-semibold">Similares que quizá te gusten</h3>
+          <div class="tw:grid tw:grid-cols-2 sm:tw:grid-cols-3 md:tw:grid-cols-4 tw:gap-4 tw:mt-3">
+            <a href="#" class="tw:block tw:rounded-lg tw:overflow-hidden tw:bg-gray-800/40 tw:p-2 hover:tw:scale-105 tw:transition">
+              <img src="https://via.placeholder.com/300x170.png?text=Similar+1" alt="Similar 1" class="tw:w-full tw:h-36 tw:object-cover tw:rounded" />
+              <div class="tw:mt-2 tw:text-sm">Película Similar 1</div>
+            </a>
+            <a href="#" class="tw:block tw:rounded-lg tw:overflow-hidden tw:bg-gray-800/40 tw:p-2 hover:tw:scale-105 tw:transition">
+              <img src="https://via.placeholder.com/300x170.png?text=Similar+2" alt="Similar 2" class="tw:w-full tw:h-36 tw:object-cover tw:rounded" />
+              <div class="tw:mt-2 tw:text-sm">Película Similar 2</div>
+            </a>
+            <a href="#" class="tw:block tw:rounded-lg tw:overflow-hidden tw:bg-gray-800/40 tw:p-2 hover:tw:scale-105 tw:transition">
+              <img src="https://via.placeholder.com/300x170.png?text=Similar+3" alt="Similar 3" class="tw:w-full tw:h-36 tw:object-cover tw:rounded" />
+              <div class="tw:mt-2 tw:text-sm">Película Similar 3</div>
+            </a>
+            <a href="#" class="tw:block tw:rounded-lg tw:overflow-hidden tw:bg-gray-800/40 tw:p-2 hover:tw:scale-105 tw:transition">
+              <img src="https://via.placeholder.com/300x170.png?text=Similar+4" alt="Similar 4" class="tw:w-full tw:h-36 tw:object-cover tw:rounded" />
+              <div class="tw:mt-2 tw:text-sm">Película Similar 4</div>
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- Footer ligero -->
+    <footer class="tw:text-center tw:text-xs tw:text-gray-500 tw:pt-8">
+      <p>© 2025 AppPelículas · Información, sinopsis y datos de ejemplo</p>
+    </footer>
