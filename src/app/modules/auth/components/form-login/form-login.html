@@ -1,46 +1,41 @@
-<div class="tw:max-w-lg tw:w-full tw:px-5">
+
+  <div class="tw:max-w-lg tw:w-full tw:px-5">
   <div
     style="box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
-           -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
-           -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);"
-    class="tw:bg-gray-200 tw:rounded-lg tw:shadow-2xl tw:overflow-hidden"
+-webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.75);"
+    class=" tw:bg-gray-200 tw:rounded-lg tw:shadow-2xl tw:overflow-hidden"
   >
     <div class="tw:p-8">
       <h2 class="tw:text-center tw:text-3xl tw:font-extrabold tw:text-gray-800">
         Bienvenido a ERP_FrontEnd
       </h2>
       <p class="tw:mt-4 tw:text-center tw:text-gray-800">Inicia sesión para continuar</p>
-
       <form [formGroup]="getFormLogin" class="tw:mt-8 tw:space-y-6">
         <div class="tw:rounded-md">
           <div class="tw:w-full">
             <mat-form-field appearance="outline" floatLabel="always" class="tw:w-full">
-              <mat-label>Dirección de correo electrónico</mat-label>
+              <mat-label>Dirección de correo electronico</mat-label>
               <input
                 matInput
                 placeholder="correo@example.com"
                 formControlName="email"
+                (blur)="getError('email')"
                 required
               />
-              <mat-error *ngIf="isValidControl('email')">
-                {{ getError('email') }}
-              </mat-error>
+              @if (isValidControl('email')) {
+              <mat-error>{{ getError('email') }}</mat-error>
+              }
             </mat-form-field>
           </div>
-
           <div class="tw:mt-4">
             <mat-form-field appearance="outline" floatLabel="always" class="tw:w-full">
               <mat-label>Escribe tu contraseña</mat-label>
-              <input
-                matInput
-                formControlName="password"
-                placeholder="Contraseña"
-                [type]="hide() ? 'password' : 'text'"
-              />
-              <mat-error *ngIf="isValidControl('password')">
-                {{ getError('password', 'contraseña') }}
-              </mat-error>
-              <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button">
+              <input matInput formControlName="password" placeholder="Contraseña" [type]="hide() ? 'password' : 'text'" />
+              @if (isValidControl('password')) {
+              <mat-error>{{ getError('password', 'contraseña') }}</mat-error>
+              }
+              <button matIconButton matSuffix (click)="clickEvent($event)">
                 <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </mat-form-field>
@@ -52,17 +47,18 @@
             <input
               class="tw:h-4 tw:w-4 tw:text-indigo-500 tw:focus:ring-indigo-400 tw:border-gray-600 tw:rounded"
               type="checkbox"
+              name="remember-me"
               id="remember-me"
               formControlName="rememberme"
             />
-            <label class="tw:ml-2 tw:block tw:text-sm tw:text-gray-800" for="remember-me">
-              Recuérdame
-            </label>
+            <label class="tw:ml-2 tw:block tw:text-sm tw:text-gray-800" for="remember-me"
+              >Recuerdame</label
+            >
           </div>
 
           <div class="tw:text-sm">
-            <a class="tw:font-medium tw:text-gray-800 tw:hover:text-gray-400" routerLink="/auth/change-password">
-              ¿Olvidaste tu contraseña?
+            <a class="tw:font-medium tw:text-gray-800 tw:hover:text-gray-400" href="#" routerLink="/auth/change-password">
+              Olvidades tu contraseña?
             </a>
           </div>
         </div>
@@ -71,19 +67,16 @@
           <button
             class="tw:group tw:relative tw:w-full tw:flex tw:justify-center tw:py-3 tw:px-4 tw:border tw:border-transparent tw:text-sm tw:font-medium tw:rounded-md tw:text-white tw:bg-gray-800 tw:hover:bg-gray-600 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-offset-2 tw:focus:ring-gray-500"
             type="submit"
-            (click)="onLogin($event)"
+            (click)="onLogin()"
           >
             Iniciar sesión
           </button>
         </div>
       </form>
     </div>
-
     <div class="tw:px-8 tw:py-4 tw:bg-gray-200 tw:text-center">
-      <span class="tw:text-gray-600">¿No tienes cuenta? </span>
-      <a class="tw:font-medium tw:text-gray-800 tw:hover:text-indigo-400" (click)="redirect('/auth/register')">
-        Crea una
-      </a>
+      <span class="tw:text-gray-600">No tienes cuenta? </span>
+      <a class="tw:font-medium tw:text-gray-800 tw:hover:text-indigo-400" (click)="redirect('/auth/register')">Crea una</a>
     </div>
   </div>
 </div>

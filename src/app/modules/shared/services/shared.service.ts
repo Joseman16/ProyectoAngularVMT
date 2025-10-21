@@ -7,6 +7,8 @@ import { EnumErrors } from '../enums/errors';
 })
 export class SharedService {
 
+  public readonly alphaNumericSpace: RegExp = /^[0-9a-zA-ZáéíóúÁÉÍÓÚ\s]+$/;
+
   // ? Mensajes de Error
   getError(form: FormGroup ,controlName: string, label?: string): string {
     const errors = form.get(controlName)?.errors;

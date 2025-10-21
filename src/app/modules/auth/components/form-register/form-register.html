@@ -12,9 +12,7 @@
         Registrate en ERP_FrontEnd
       </h2>
       <p class="tw:mt-4 tw:text-center tw:text-gray-800">Llena tus datos para continuar</p>
-      
-      <!-- ✅ Agregado (ngSubmit) para manejar el enter y el submit -->
-      <form [formGroup]="formRegister" (ngSubmit)="registerUser()" class="tw:mt-8 tw:space-y-6">
+      <form [formGroup]="formRegister" class="tw:mt-8 tw:space-y-6">
         <div class="tw:rounded-md">
           <div class="tw:w-full tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-3">
             <mat-form-field appearance="outline" floatLabel="always" class="tw:w-full tw:mb-5">
@@ -71,8 +69,7 @@
               @if (isValidControl('password')) {
               <mat-error>{{ getError('password', 'contraseña') }}</mat-error>
               }
-              <!-- ✅ Agregado type="button" para prevenir submit -->
-              <button type="button" matIconButton matSuffix (click)="clickEvent($event)">
+              <button matIconButton matSuffix (click)="clickEvent($event)">
                 <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </mat-form-field>
@@ -87,8 +84,7 @@
               @if (isValidControl('repeatPassword')) {
               <mat-error>{{ getError('repeatPassword', 'contraseñas') }}</mat-error>
               }
-              <!-- ✅ Agregado type="button" para prevenir submit -->
-              <button type="button" matIconButton matSuffix (click)="clickEvent($event)">
+              <button matIconButton matSuffix (click)="clickEvent($event)">
                 <mat-icon>{{ hide() ? 'visibility_off' : 'visibility' }}</mat-icon>
               </button>
             </mat-form-field>
@@ -96,11 +92,10 @@
         </div>
 
         <div>
-          <!-- ✅ El botón ahora solo tiene type="submit" sin (click) -->
           <button
             class="tw:group tw:relative tw:w-full tw:flex tw:justify-center tw:py-3 tw:px-4 tw:border tw:border-transparent tw:text-sm tw:font-medium tw:rounded-md tw:text-white tw:bg-gray-800 tw:hover:bg-gray-600 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-offset-2 tw:focus:ring-gray-500"
             type="submit"
-            [disabled]="formRegister.invalid"
+            (click)="registerUser()"
           >
             Registrate
           </button>
@@ -110,7 +105,7 @@
     <div class="tw:px-8 tw:py-4 tw:bg-gray-200 tw:text-center">
       <span class="tw:text-gray-600">Ya tienes cuenta? </span>
       <a
-        class="tw:font-medium tw:text-gray-800 tw:hover:text-indigo-400 tw:cursor-pointer"
+        class="tw:font-medium tw:text-gray-800 tw:hover:text-indigo-400"
         (click)="redirect('/auth/login')"
         >Inicia sesión</a
       >

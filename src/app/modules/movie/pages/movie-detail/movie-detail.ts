@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MovieService } from '../../services/movie.service';
 import { URL_ROUTES } from '../../../shared/const/url-routes';
 import { IMovieDetail } from '../../interfaces/IMovieDetail.interface';
-import { environments } from '../../../../../environments/environments';
+import { environments } from '../../../../environments/environments';
 
 @Component({
   selector: 'app-movie-detail',
@@ -34,6 +34,6 @@ export class MovieDetail implements OnInit {
   }
 
   get baseUrlImage() {
-    return environments.baseUrlTMDB_Images
+    return environments.baseUrlTMDB_Images + '/original';
   }
 }

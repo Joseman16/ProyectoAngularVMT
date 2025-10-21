@@ -1,0 +1,139 @@
+<div class="tw:flex tw:items-center tw:justify-center tw:gap-4 tw:mb-8 tw:w-full tw:p-6">
+  <form [formGroup]="formProduct" class="tw:w-full tw:max-w-4xl">
+    <div class="tw:mb-6">
+      <h3 class="tw:text-xl tw:font-bold tw:text-gray-800 tw:mb-2">
+        {{product ? 'Editar Producto' : 'Nuevo Producto'}}
+      </h3>
+      <p class="tw:text-gray-600 tw:text-sm">
+        {{product ? 'Modifica la información del producto seleccionado' : 'Completa la información para agregar un nuevo producto al inventario'}}
+      </p>
+    </div>
+    
+    <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-6">
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="nombreProducto" class="tw:font-semibold tw:text-gray-700">
+          Nombre del Producto <span class="tw:text-red-500">*</span>
+        </label>
+        <input
+          pInputText
+          [pKeyFilter]="alphaNumericSpace"
+          id="nombreProducto"
+          formControlName="prodDescripcion"
+          autocomplete="off"
+          placeholder="Ingresa el nombre del producto"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('prodDescripcion')?.invalid && formProduct.get('prodDescripcion')?.touched"
+        />
+        @if (formProduct.get('prodDescripcion')?.invalid && formProduct.get('prodDescripcion')?.touched) {
+          <small class="tw:text-red-500">El nombre del producto es requerido</small>
+        }
+      </div>
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="price" class="tw:font-semibold tw:text-gray-700">
+          Precio por Unidad <span class="tw:text-red-500">*</span>
+        </label>
+        <p-inputnumber
+          formControlName="prodUltPrecio"
+          inputId="currency-us"
+          mode="currency"
+          currency="USD"
+          locale="en-US"
+          placeholder="0.00"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('prodUltPrecio')?.invalid && formProduct.get('prodUltPrecio')?.touched"
+        />
+        @if (formProduct.get('prodUltPrecio')?.invalid && formProduct.get('prodUltPrecio')?.touched) {
+          <small class="tw:text-red-500">El precio debe ser mayor a cero</small>
+        }
+      </div>
+      
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="category" class="tw:font-semibold tw:text-gray-700">
+          Categoría <span class="tw:text-red-500">*</span>
+        </label>
+        <p-select
+          [options]="categories()"
+          formControlName="categoriaId"
+          optionValue="categoriaId"
+          optionLabel="categoriaDescrip"
+          placeholder="Selecciona una categoría"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('categoriaId')?.invalid && formProduct.get('categoriaId')?.touched"
+        />
+        @if (formProduct.get('categoriaId')?.invalid && formProduct.get('categoriaId')?.touched) {
+          <small class="tw:text-red-500">Debe seleccionar una categoría</small>
+        }
+      </div>
+      
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="company" class="tw:font-semibold tw:text-gray-700">
+          Empresa <span class="tw:text-red-500">*</span>
+        </label>
+        <p-select
+          [options]="companies()"
+          formControlName="empresaId"
+          optionValue="companyId"
+          optionLabel="companyName"
+          placeholder="Selecciona una empresa"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('empresaId')?.invalid && formProduct.get('empresaId')?.touched"
+        />
+        @if (formProduct.get('empresaId')?.invalid && formProduct.get('empresaId')?.touched) {
+          <small class="tw:text-red-500">Debe seleccionar una empresa</small>
+        }
+      </div>
+      
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="supplier" class="tw:font-semibold tw:text-gray-700">
+          Proveedor <span class="tw:text-red-500">*</span>
+        </label>
+        <p-select
+          [options]="suppliers()"
+          formControlName="proveedorId"
+          optionValue="provId"
+          optionLabel="provNomComercial"
+          placeholder="Selecciona un proveedor"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('proveedorId')?.invalid && formProduct.get('proveedorId')?.touched"
+        />
+        @if (formProduct.get('proveedorId')?.invalid && formProduct.get('proveedorId')?.touched) {
+          <small class="tw:text-red-500">Debe seleccionar un proveedor</small>
+        }
+      </div>
+      
+      <div class="tw:flex tw:flex-col tw:gap-2">
+        <label for="brand" class="tw:font-semibold tw:text-gray-700">
+          Marca <span class="tw:text-red-500">*</span>
+        </label>
+        <p-select
+          [options]="brands()"
+          formControlName="marcaId"
+          optionValue="marcaId"
+          optionLabel="marcaDescrip"
+          placeholder="Selecciona una marca"
+          class="tw:w-full"
+          [class.tw:border-red-500]="formProduct.get('marcaId')?.invalid && formProduct.get('marcaId')?.touched"
+        />
+        @if (formProduct.get('marcaId')?.invalid && formProduct.get('marcaId')?.touched) {
+          <small class="tw:text-red-500">Debe seleccionar una marca</small>
+        }
+      </div>
+    </div>
+    
+    <div class="tw:flex tw:justify-end tw:gap-3 tw:mt-8 tw:pt-6 tw:border-t tw:border-gray-200">
+      <p-button 
+        label="Cancelar" 
+        (onClick)="onClose()" 
+        severity="secondary" 
+        [rounded]="true"
+        icon="pi pi-times"
+      />
+      <p-button 
+        [label]="product ? 'Actualizar Producto' : 'Crear Producto'" 
+        (onClick)="saveProduct()" 
+        [rounded]="true"
+        icon="pi pi-check"
+      />
+    </div>
+  </form>
+</div>

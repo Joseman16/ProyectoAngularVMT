@@ -1,0 +1,5 @@
+<div class="tw:flex tw:justify-center tw:items-center tw:flex-wrap tw:gap-y-8 tw:gap-x-3 tw:py-2">
+  @for (movie of movies(); track $index) {
+    <app-animated-movie-card [movie]="movie" />
+  }
+</div>

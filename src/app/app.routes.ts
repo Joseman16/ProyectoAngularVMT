@@ -5,12 +5,12 @@ import { noAuthGuard } from './modules/shared/guards/noAuth.guard';
 export const routes: Routes = [
   {
     path: 'auth',
-    canActivate: [noAuthGuard],
+    //canActivate: [noAuthGuard],
     loadChildren: () => import('./modules/auth/auth.routes').then( r => r.routes)
   },
   {
     path: 'admin',
-    canActivate: [authGuard],
+    //canActivate: [authGuard],
     loadComponent: () => import('./modules/layout/pages/main/main').then( c => c.Main),
     children: [
       {

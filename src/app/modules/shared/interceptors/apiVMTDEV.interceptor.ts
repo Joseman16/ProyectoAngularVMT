@@ -1,5 +1,5 @@
 import type { HttpInterceptorFn } from '@angular/common/http';
-import { environments } from '../../../../environments/environments';
+import { environments } from '../../../environments/environments';
 import { LocalStorageService } from '../services/localStorage.service';
 import { inject } from '@angular/core';
 import { EnumKeys } from '../enums/keys';
@@ -11,7 +11,7 @@ export const apiVMTDEVInterceptor: HttpInterceptorFn = (req, next) => {
   if(token && req.url.includes(environments.baseUrl)){
     cloneReq = cloneReq.clone({
       setHeaders: {
-        "Authorization": `Bearer ${token}`
+        "Token": `${token}`
       }
     })
   }

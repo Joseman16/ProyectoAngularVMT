@@ -1,5 +1,5 @@
 import type { HttpInterceptorFn } from '@angular/common/http';
-import { environments } from '../../../../environments/environments';
+import { environments } from '../../../environments/environments';
 
 export const apiTMDBInterceptor: HttpInterceptorFn = (req, next) => {
   let cloneReq = req;

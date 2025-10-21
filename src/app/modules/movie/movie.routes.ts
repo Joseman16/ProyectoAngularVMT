@@ -10,6 +10,19 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/movie-detail/movie-detail').then( c => c.MovieDetail)
   },
   {
+    path: 'popular',
+    loadComponent: () => import('./pages/movie-popular/movie-popular').then( c => c.MoviePopular)
+  },
+
+  {
+    path: 'top-rated',
+    loadComponent: () => import('./pages/movie-top-rated/movie-top-rated').then( c => c.MovieTopRated)
+  },
+  {
+    path: 'upcoming',
+    loadComponent: () => import('./pages/movie-upcoming/movie-upcoming').then( c => c.MovieUpcoming)
+  },
+  {
     path: 'error',
     loadComponent: () => import('../shared/components/error/error').then( c => c.Error)
   },

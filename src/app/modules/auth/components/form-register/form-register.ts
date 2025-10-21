@@ -4,6 +4,7 @@ import {
   FormBuilder,
   ReactiveFormsModule,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { SharedService } from '../../../shared/services/shared.service';
@@ -47,14 +48,13 @@ export class FormRegister {
 
   // ? Publics
   public readonly hide = signal(true);
-  public readonly isLoading = signal(false);
   public readonly passwordMinLength: number = 8;
   public readonly maxLength: number = 60;
 
   // ? Privates
   private readonly _formRegister = this._fb.group({
-    firstNames: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
-    lastNames: ['', [Validators.required, Validators.maxLength(this.maxLength)]],
+    firstNames: ['', [Validators.required, Validators.maxLength(this.maxLength)], []],
+    lastNames: ['', [Validators.required, Validators.maxLength(this.maxLength)], []],
     email: ['', [Validators.required, Validators.email]],
     password: [
       '',
@@ -63,6 +63,7 @@ export class FormRegister {
         Validators.minLength(this.passwordMinLength),
         Validators.maxLength(this.maxLength),
       ],
+      [],
     ],
     repeatPassword: [
       '',
@@ -72,6 +73,7 @@ export class FormRegister {
         Validators.maxLength(this.maxLength),
         this.validatePasswordCompare('password'),
       ],
+      [],
     ],
   });
 
@@ -103,17 +105,22 @@ export class FormRegister {
 
   validatePasswordCompare(controlName: string) {
     return (control: AbstractControl): ValidationErrors | null => {
+      // ? Valida que el contralador principal exista
       if (!control.parent) {
-        return null;
+        return null; // aún no está inicializado
       }
 
+      // ? Valida que el segundo controlador exista
       const otherControl = control.parent.get(controlName);
       if (!otherControl) {
         return null;
       }
 
+      // ? Comparar contraseñas
       if (control.value !== otherControl.value) {
-        return { misMatch: true };
+        return {
+          misMatch: true,
+        }; // ❌ no coinciden
       }
 
       return null;
@@ -121,80 +128,29 @@ export class FormRegister {
   }
 
   registerUser() {
-    console.log('🔵 INICIO - Método registerUser ejecutado');
-    console.log('📝 Form valid:', this._formRegister.valid);
-    console.log('📋 Form value:', this._formRegister.value);
-    console.log('📊 Form errors:', this._formRegister.errors);
-    
-    // Validar cada control
-    Object.keys(this._formRegister.controls).forEach(key => {
-      const control = this._formRegister.get(key);
-      console.log(`Control ${key}:`, {
-        valid: control?.valid,
-        value: control?.value,
-        errors: control?.errors
-      });
-    });
-
-    // Validar Formulario
-    if (this._formRegister.invalid) {
-      this._formRegister.markAllAsTouched();
-      this._toastr.error('Llena todos los campos correctamente', 'Formulario Inválido');
-      console.log('❌ Formulario inválido - Deteniendo ejecución');
-      return;
+    // ? Validar Formulario
+    if(this._formRegister.invalid) {
+      this._toastr.error('Llena todos los campos', 'Formulario Inválido')
+      return
     }
-
-    // Prevenir múltiples envíos
-    if (this.isLoading()) {
-      console.log('⏳ Ya hay una petición en curso');
-      return;
-    }
-
-    console.log('✅ Formulario válido - Preparando petición');
-    this.isLoading.set(true);
-    
     const formValue = this._formRegister.value as IFormRegister;
 
     const payload: IRegister = {
       companyId: 1,
       email: formValue.email,
-      name: `${formValue.firstNames} ${formValue.lastNames}`.trim(),
+      name: `${formValue.firstNames} ${formValue.lastNames}`,
       password: formValue.password
     };
-
-    console.log('📤 Payload preparado:', payload);
-    console.log('🌐 Enviando petición...');
-
     this._authService.register(payload).subscribe({
-      next: (res) => {
-        console.log('✅ ÉXITO - Respuesta del servidor:', res);
-        this._toastr.success('Usuario registrado exitosamente', 'Registro Exitoso');
-        this._formRegister.reset();
-        
-        setTimeout(() => {
-          console.log('🔄 Redirigiendo a login...');
-          this._router.navigateByUrl(URL_ROUTES.LOGIN);
-        }, 1500);
+      next: ( res ) => {
+        this._router.navigateByUrl(URL_ROUTES.LOGIN)
       },
-      error: (err) => {
-        console.error('❌ ERROR - Error completo:', err);
-        console.error('📛 Status:', err.status);
-        console.error('📛 StatusText:', err.statusText);
-        console.error('📛 Error body:', err.error);
-        console.error('📛 Message:', err.message);
-        
-        const errorMessage = err.error?.message || 
-                           err.error?.title || 
-                           err.message ||
-                           'Ocurrió un error al registrar el usuario';
-        
-        this._toastr.error(errorMessage, 'Error en Registro');
-        this.isLoading.set(false);
+      error: ( err ) => {
+        this._router.navigateByUrl(URL_ROUTES.LOGIN)
       },
       complete: () => {
-        console.log('🏁 Petición completada');
-        this.isLoading.set(false);
+
       }
-    });
+    })
   }
 }

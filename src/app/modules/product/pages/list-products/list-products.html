@@ -1,0 +1,110 @@
+<div class="tw:flex tw:flex-col tw:gap-6 tw:p-6">
+  <!-- Header Section -->
+  <div class="tw:flex tw:flex-col tw:gap-2">
+    <div class="tw:flex tw:items-center tw:gap-3">
+      <i class="pi pi-box tw:text-3xl tw:text-blue-600"></i>
+      <h1 class="tw:text-2xl tw:font-bold tw:text-gray-800">
+        Gestión de Productos
+      </h1>
+    </div>
+    <p class="tw:text-gray-600 tw:text-sm">
+      Panel administrativo para el mantenimiento completo de productos. Aquí puedes crear, editar y eliminar productos de tu inventario.
+    </p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-3 tw:gap-4 tw:mb-4">
+    <div class="tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200">
+      <div class="tw:flex tw:items-center tw:gap-3">
+        <div class="tw:p-2 tw:bg-blue-100 tw:rounded-lg">
+          <i class="pi pi-box tw:text-blue-600"></i>
+        </div>
+        <div>
+          <p class="tw:text-sm tw:text-gray-600">Total Productos</p>
+          <p class="tw:text-2xl tw:font-bold tw:text-gray-800">{{totalProducts}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200">
+      <div class="tw:flex tw:items-center tw:gap-3">
+        <div class="tw:p-2 tw:bg-green-100 tw:rounded-lg">
+          <i class="pi pi-check-circle tw:text-green-600"></i>
+        </div>
+        <div>
+          <p class="tw:text-sm tw:text-gray-600">Productos Activos</p>
+          <p class="tw:text-2xl tw:font-bold tw:text-gray-800">{{activeProducts}}</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200">
+      <div class="tw:flex tw:items-center tw:gap-3">
+        <div class="tw:p-2 tw:bg-orange-100 tw:rounded-lg">
+          <i class="pi pi-dollar tw:text-orange-600"></i>
+        </div>
+        <div>
+          <p class="tw:text-sm tw:text-gray-600">Precio Promedio</p>
+          <p class="tw:text-2xl tw:font-bold tw:text-gray-800">
+            ${{averagePrice}}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions Section -->
+  <div class="tw:flex tw:justify-between tw:items-center tw:bg-white tw:p-4 tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200">
+    <div class="tw:flex tw:items-center tw:gap-2">
+      <i class="pi pi-search tw:text-gray-500"></i>
+      <span class="tw:text-sm tw:text-gray-600">Gestión completa de inventario</span>
+    </div>
+    <div class="tw:flex tw:gap-2">
+      <p-button 
+        icon="pi pi-refresh" 
+        (onClick)="listProducts()" 
+        label="Actualizar" 
+        severity="secondary" 
+        [rounded]="true"
+        size="small"
+      />
+      <p-button 
+        icon="pi pi-plus" 
+        (onClick)="createProduct()" 
+        label="Nuevo Producto" 
+        [rounded]="true" 
+        severity="success"
+        size="small"
+      />
+    </div>
+  </div>
+
+  <!-- Products Table -->
+  <div class="tw:bg-white tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200 tw:overflow-hidden">
+    <app-custom-table
+      [data]="products()"
+      [columns]="columns"
+      [editable]="true"
+      [delete]="true"
+      (onAccionEmit)="accionEvent($event)"
+    />
+  </div>
+
+  <!-- Empty State -->
+  @if (products().length === 0) {
+    <div class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:py-12 tw:bg-white tw:rounded-lg tw:shadow-sm tw:border tw:border-gray-200">
+      <i class="pi pi-box tw:text-6xl tw:text-gray-300 tw:mb-4"></i>
+      <h3 class="tw:text-xl tw:font-semibold tw:text-gray-700 tw:mb-2">No hay productos registrados</h3>
+      <p class="tw:text-gray-500 tw:mb-6 tw:text-center tw:max-w-md">
+        Comienza agregando tu primer producto al inventario. Haz clic en "Nuevo Producto" para empezar.
+      </p>
+      <p-button 
+        icon="pi pi-plus" 
+        (onClick)="createProduct()" 
+        label="Agregar Primer Producto" 
+        severity="success"
+        [rounded]="true"
+      />
+    </div>
+  }
+</div>

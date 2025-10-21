@@ -1,11 +1,12 @@
-import { Component, ElementRef, inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormLogin } from '../../components/form-login/form-login';
-import { AuthService, ILoginResponse } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { IFormLogin } from '../../interfaces/IFormLogin.interface';
 import { ToastrService } from 'ngx-toastr';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
+import { Router, RouterLink } from '@angular/router';
 import { EnumKeys } from '../../../shared/enums/keys';
 import { LocalStorageService } from '../../../shared/services/localStorage.service';
 import { URL_ROUTES } from '../../../shared/const/url-routes';
@@ -15,49 +16,50 @@ import { URL_ROUTES } from '../../../shared/const/url-routes';
   standalone: true,
   imports: [ReactiveFormsModule, FormLogin],
   templateUrl: './login.html',
-  styleUrls: ['./login.scss'],
+  styleUrl: './login.scss',
 })
 export class Login {
   @ViewChild('appFormLogin', { static: false }) appFormLogin?: ElementRef<HTMLDivElement>;
 
+  public readonly localStorage = inject(LocalStorageService)
+
   private readonly _authService = inject(AuthService);
   private readonly _toastr = inject(ToastrService);
   private readonly _router = inject(Router);
-  private readonly _localStorage = inject(LocalStorageService);
+
 
   login(value: IFormLogin) {
-    const { email, password, rememberme } = value;
+    const { email, password } = value;
     if (!email || !password) return;
-
     this._authService.login({ email, password }).subscribe({
-      next: (res: ILoginResponse) => {
-        console.log('Login response:', res); // Debug
-        if (res.code.toString().startsWith('20') && res.data?.jwt) {
-          // Guardar en localStorage si recuerdame
-          if (rememberme) {
-            this._localStorage.setItem(EnumKeys.RECUERDAME, value);
-          } else {
-            this._localStorage.removeItem(EnumKeys.RECUERDAME);
+      next: (res) => {
+        if (res.code.toString().includes('20')) {
+          if(value.rememberme ){
+            this.localStorage.setItem(EnumKeys.RECUERDAME, value)
+          } else if(!value.rememberme && this.localStorage.getItem(EnumKeys.RECUERDAME)){
+            this.localStorage.removeItem(EnumKeys.RECUERDAME)
           }
 
-          this._localStorage.setItem(EnumKeys.JWT, res.data.jwt);
-          this._toastr.success(res.message, 'Login Exitoso');
+          this.localStorage.setItem(EnumKeys.JWT, res.data?.jwt)
+          this._toastr.success(res.message, 'Transacción Exítosa');
           this._router.navigateByUrl(URL_ROUTES.DASHBOARD);
         } else {
-          this._toastr.error(res.message || 'Credenciales incorrectas', 'Error');
+          this._toastr.error(res.message, 'Ocurrio un problema, vuelve a intentar.');
         }
       },
       error: (err: HttpErrorResponse) => {
-        console.error('Login error:', err.error || err);
-        this._toastr.error(err.error?.message || 'Ocurrió un error en el login', 'Error');
-      }
+        console.log(err);
+      },
+      complete: () => {},
     });
   }
 
-  redirect(path: string) {
+  redirect(path: string): void {
     if (this.appFormLogin) {
-      this.appFormLogin.nativeElement.classList.add('animate__fadeOutDown');
+      this.appFormLogin?.nativeElement.classList.add('animate__fadeOutDown');
     }
-    setTimeout(() => this._router.navigateByUrl(path), 500);
+    setTimeout(() => {
+      this._router.navigateByUrl(path);
+    }, 1000);
   }
 }

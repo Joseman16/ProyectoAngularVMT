@@ -1,68 +1,41 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environments } from '../../../../environments/environments'; // <-- corregido
-
-// Interfaces
-export interface IRegister {
-  companyId: number;
-  email: string;
-  name: string;
-  password: string;
-}
-
-export interface ILogin {
-  email: string;
-  password: string;
-}
-
-export interface ILoginResponse {
-  code: number;
-  message: string;
-  data?: {
-    jwt: string;
-    user?: any;
-  };
-}
+import { inject, Injectable } from '@angular/core';
+import { ILogin } from '../interfaces/ILogin.interface';
+import { Observable, of } from 'rxjs';
+import { IApiResponse } from '../../shared/interfaces/IApiResponse.interface';
+import { ILoginResponse } from '../interfaces/ILoginResponse';
+import { environments } from '../../../environments/environments';
+import { IRegister } from '../interfaces/IRegister.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly http = inject(HttpClient);
-  private readonly apiUrl = environments.apiUrl; // <-- corregido
 
-  /**
-   * Registra un nuevo usuario
-   */
-  register(data: IRegister): Observable<any> {
-    console.log('🌐 Register URL:', `${this.apiUrl}/Security/Authentication/Register`);
-    console.log('📦 Register Data:', data);
-    
-    return this.http.post<any>(
-      `${this.apiUrl}/Security/Authentication/Register`,
-      data
-    );
+  private readonly _baseUrl: string = environments.baseUrl;
+  private readonly _http = inject(HttpClient)
+
+  login(payload: ILogin): Observable<IApiResponse<ILoginResponse>> {
+    /*const url: string = `${this._baseUrl}/Security/Authentication/Login`
+    const body = { ...payload }
+    return this._http.post<IApiResponse<ILoginResponse>>(url, body)
+    */
+   return of({
+      code:200,
+      message: 'Tranasacción exitosa, OK!',
+      data: {
+        id:1,
+        companyName: 'Viamatica',
+        jwt: '0942677998',
+        name: 'Jose Leon'
+      }
+    } as IApiResponse<ILoginResponse>); 
   }
 
-  /**
-   * Inicia sesión de un usuario
-   */
-  login(credentials: ILogin): Observable<ILoginResponse> {
-    console.log('🌐 Login URL:', `${this.apiUrl}/Security/Authentication/Login`);
-    console.log('📦 Login Credentials:', credentials);
-    
-    return this.http.post<ILoginResponse>(
-      `${this.apiUrl}/Security/Authentication/Login`,
-      credentials
-    );
+  register(payload: IRegister): Observable<IApiResponse<boolean>> {
+    const url: string = `${this._baseUrl}/Security/Authentication/Register`
+    const body = { ...payload }
+    return this._http.post<IApiResponse<boolean>>(url, body)
   }
 
-  /**
-   * Cierra sesión (opcional)
-   */
-  logout(): void {
-    localStorage.removeItem('token'); // <-- opcional
-    localStorage.removeItem('user');  // <-- opcional
-  }
 }

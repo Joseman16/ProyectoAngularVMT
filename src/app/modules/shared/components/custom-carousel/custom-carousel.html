@@ -1,0 +1,15 @@
+<div class="card">
+    <p-carousel [value]="data" [numVisible]="3" [numScroll]="3" [circular]="false" [responsiveOptions]="responsiveOptions">
+        <ng-template let-value #item>
+            <!-- ? Component del Carousel  -->
+            @switch (customComponent) {
+              @case ('movie-card') {
+                <app-movie-card [movie]="value" />
+              }
+              @default {
+                <strong>Component no definido</strong>
+              }
+            }
+        </ng-template>
+    </p-carousel>
+</div>

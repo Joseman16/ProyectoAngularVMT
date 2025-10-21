@@ -53,8 +53,8 @@
               "outputHashing": "all",
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environments.ts",
-                  "with": "src/environments/environments.prod.ts"
+                  "replace": "src/app/environments/environments.ts",
+                  "with": "src/app/environments/environments.prod.ts"
                 }
               ]
             },
@@ -76,10 +76,7 @@
               "buildTarget": "ERP-FrontEnd:build:development"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "proxy.conf.json"
-          }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"

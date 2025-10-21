@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { IMovieNowPlaying } from '../../interfaces/INowPlaying.interface';
-import { environments } from '../../../../../environments/environments';
+import { environments } from '../../../../environments/environments';
 import { RouterLink } from '@angular/router';
 import { URL_ROUTES } from '../../../shared/const/url-routes';
 

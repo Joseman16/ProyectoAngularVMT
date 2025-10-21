@@ -1,0 +1,47 @@
+<div class="card">
+    <p-table [value]="data" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template #header>
+            <tr>
+                @for (column of columns; track $index) {
+                  <th>{{column.header}}</th>
+                }
+
+                @if(editable || delete){
+                  <th class="tw:text-center">
+                    <p class="tw:text-center">Acciones</p>
+                  </th>
+                }
+            </tr>
+        </ng-template>
+        <ng-template #body let-item>
+            <tr>
+                @for (column of columns; track $index) {
+                  @switch (column.format?.type) {
+                    @case ('currency') {
+                      <td>{{ item[column.field] | currency }}</td>
+                    }
+                    @case ('date') {
+                      <td>{{ item[column.field] | date:column.format?.params }}</td>
+
+                    }
+                    @default {
+                      <td>{{ item[column.field] }}</td>
+                    }
+                  }
+                }
+                @if(editable || delete){
+                  <td >
+                    <div class="tw:gap-4 tw:flex tw:justify-center tw:items-center">
+                      @if (editable) {
+                        <span (click)="onAccionEvent('editable', item )" class="pi pi-pencil"></span>
+                      }
+                      @if (delete) {
+                        <span (click)="onAccionEvent('delete', item )" class="pi pi-trash"></span>
+                      }
+                    </div>
+                  </td>
+                }
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
